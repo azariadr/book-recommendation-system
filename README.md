@@ -91,6 +91,7 @@ Akurasi model rekomendasi dievaluasi dengan menghitung persentase buku yang dire
 Model dievaluasi menggunakan metrik Root Mean Squared Error (RMSE). 
 
 RMSE = √(Σ(yᵢ - ŷᵢ)² / n)
+
 Keterangan:
 - yᵢ: Nilai aktual (observasi) ke-i.
 - ŷᵢ: Nilai prediksi ke-i.
