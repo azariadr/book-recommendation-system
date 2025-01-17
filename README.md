@@ -50,12 +50,14 @@ Variabel-variabel pada Ratings.csv adalah sebagai berikut:
 
 ### Exploratory Data Analysis (EDA)
 Bar plot digunakan untuk menampilkan frekuensi atau jumlah data dalam setiap kategori. Dalam contoh ini, kita melihat distribusi data pada fitur 'year_of_publication' dan 'rating' untuk mengetahui sebaran rating buku dan berapa banyak buku yang dipublikasikan pada setiap tahun.
-![Distribusi Rating Buku](https://github.com/user-attachments/assets/04a2f631-50b7-441b-b32b-943f53a12d35)
-![Distribusi Tahun Publikasi Buku](https://github.com/user-attachments/assets/650f8612-00b9-4340-a6a3-76f6e10e34cf)
+
+![Distribusi Tahun Publikasi Buku](https://github.com/user-attachments/assets/c196e0f9-f6fe-4573-a655-fe74568a276b)
+
+![Distribusi Rating Buku](https://github.com/user-attachments/assets/5461e3a6-d64c-4d8c-8fa3-17f3b69688b5)
 
 Pair plot menampilkan scatter plot untuk setiap pasangan fitur numerik dalam dataset. Ini membantu untuk mengidentifikasi korelasi dan pola hubungan antar fitur. diag_kind='kde' digunakan untuk menampilkan kernel density estimate (KDE) pada diagonal, yang memberikan informasi tentang distribusi data untuk setiap fitur.
 
-![Pairplot](https://github.com/user-attachments/assets/27525e73-2636-4529-be20-97f57e48acf6)
+![Pairplot](https://github.com/user-attachments/assets/3dcd3a84-699f-46ce-8c96-2f1437e2f3e6)
 
 ## Data Preparation
 Nama kolom pada DataFrame `ratings` dan `books` diubah menggunakan rename agar lebih mudah diakses dan konsisten. Nama kolom `Book-Rating` diubah menjadi `rating` dan `User-ID` diubah menjadi `user_id` pada DataFrame `ratings`.Nama kolom `Book-Title` diubah menjadi `book_title`, `Book-Author` diubah menjadi `book_author`, `Year-Of-Publication` diubah menjadi `year_of_publication`, `Image-URL-S` diubah menjadi `Image_URL_S`, `Image-URL-M` diubah menjadi `Image_URL_M`, dan `Image-URL-L` diubah menjadi `Image_URL_L` pada DataFrame `books`. Proyek ini hanya menggunakan 10.000 data Books.csv dan 5.000 data Ratings.csv untuk mempercepat proses training model. Buku-buku dengan rating tertinggi disimpan dalam list `best_books`. Dilakukan penghapusan baris yang mengandung nilai missing (NaN) menggunakan dropna. Pembersihan data dilakukan dengan menghilangkan baris yang tidak lengkap, sehingga data yang digunakan untuk analisis lebih valid. Baris duplikat dihapus menggunakan drop duplicates untuk membersihkan data dengan memastikan setiap baris data unik, sehingga menghindari bias dalam analisis.
@@ -71,16 +73,19 @@ Variabel `user_id` dan `ISBN` (yang mungkin berupa string atau angka yang tidak 
 Proyek ini membangun sistem rekomendasi buku berbasis konten yang merekomendasikan buku-buku dengan penulis yang serupa dengan buku yang telah dibaca pengguna. Pendekatan yang digunakan adalah Cosine Similarity untuk mengukur kesamaan antar buku berdasarkan bobot kata dalam nama penulis yang dihitung menggunakan TF-IDF. `cosine_similarity` dari library scikit-learn digunakan untuk menghitung kemiripan antar buku berdasarkan representasi vektor TF-IDF mereka. Cosine similarity mengukur sudut antara dua vektor, dengan nilai mendekati 1 menunjukkan kemiripan yang tinggi dan nilai mendekati 0 menunjukkan kemiripan yang rendah. Hasil perhitungan disimpan dalam matriks cosine similarity di mana setiap elemen (i, j) menunjukkan kemiripan antara buku i dan buku j.
 
 Fungsi `author_recommendations` menerima judul buku yang telah dibaca sebagai input. Fungsi mencari buku input dalam matriks cosine similarity. Fungsi mengurutkan buku-buku lain berdasarkan nilai cosine similarity terhadap buku input (dari yang paling mirip hingga yang paling tidak mirip). Fungsi mengembalikan daftar buku yang paling mirip (direkomendasikan) selain buku input.
-<img width="412" alt="image" src="https://github.com/user-attachments/assets/e865e33f-ea13-4e7e-bc09-c321b5738d98" />
+
+<img width="328" alt="Screenshot 2025-01-17 175127" src="https://github.com/user-attachments/assets/0a39b71f-34fb-4503-b871-dc6f0d256af9" />
 
 ### Collaborative Based Filtering
 Model RecommenderNet didefinisikan sebagai subclass dari tf.keras.Model. Model menggunakan layer embedding untuk user dan buku, serta layer bias. Fungsi aktivasi sigmoid digunakan untuk menghasilkan prediksi rating dalam rentang 0 hingga 1. Model dikompilasi dengan fungsi loss BinaryCrossentropy, optimizer Adam, dan metrik RootMeanSquaredError. Model dilatih menggunakan data training dengan model.fit().
-<img width="539" alt="image" src="https://github.com/user-attachments/assets/d7835904-fcf5-4f48-b3c6-834f8ac81107" />
+
+<img width="430" alt="Screenshot 2025-01-17 175429" src="https://github.com/user-attachments/assets/3db98db0-c9b0-42be-bed2-30443feedc44" />
 
 ## Evaluation
 ### Content Based Filtering
 Akurasi model rekomendasi dievaluasi dengan menghitung persentase buku yang direkomendasikan yang memiliki penulis yang sama dengan buku yang telah dibaca oleh pengguna.
-<img width="189" alt="image" src="https://github.com/user-attachments/assets/7038c044-7dde-43cb-8ba5-1476777c805c" />
+
+<img width="149" alt="Screenshot 2025-01-17 175650" src="https://github.com/user-attachments/assets/ed5c68cc-d142-4c4e-84e6-97db0361951b" />
 
 ### Collaborative Based Filtering
 Model dievaluasi menggunakan metrik Root Mean Squared Error (RMSE). 
@@ -93,4 +98,5 @@ Keterangan:
 - Σ: Simbol sigma, yang berarti penjumlahan dari semua nilai.
 
 RMSE mengukur rata-rata perbedaan kuadrat antara prediksi rating dan rating sebenarnya. Semakin rendah nilai RMSE, semakin baik performa model. Model berhasil dilatih dan menunjukkan penurunan nilai RMSE selama proses training.
-![image](https://github.com/user-attachments/assets/cccef4a2-bfbf-4dee-a03a-f836dd4518b9)
+
+![download](https://github.com/user-attachments/assets/c01b89dc-f2d0-4741-b273-af48ca98e0cb)
