@@ -54,6 +54,7 @@ Bar plot digunakan untuk menampilkan frekuensi atau jumlah data dalam setiap kat
 ![Distribusi Tahun Publikasi Buku](https://github.com/user-attachments/assets/650f8612-00b9-4340-a6a3-76f6e10e34cf)
 
 Pair plot menampilkan scatter plot untuk setiap pasangan fitur numerik dalam dataset. Ini membantu untuk mengidentifikasi korelasi dan pola hubungan antar fitur. diag_kind='kde' digunakan untuk menampilkan kernel density estimate (KDE) pada diagonal, yang memberikan informasi tentang distribusi data untuk setiap fitur.
+
 ![Pairplot](https://github.com/user-attachments/assets/27525e73-2636-4529-be20-97f57e48acf6)
 
 ## Data Preparation
